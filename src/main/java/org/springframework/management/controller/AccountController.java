@@ -1,5 +1,6 @@
 package org.springframework.management.controller;
 
+import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.management.entity.User;
 import org.springframework.management.requestmodel.LoginModel;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import sun.security.provider.MD5;
 
 @RestController
 public class AccountController extends BaseController{
@@ -19,7 +21,7 @@ public class AccountController extends BaseController{
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Message login(@RequestBody LoginModel model) {
-        User user = userService.findByNameAndPassword(model.getName(), new BCryptPasswordEncoder().encode(model.getPassword()));
+        User user = userService.findByNameAndPassword(model.getName(), model.getPassword());
         if (user == null) {
             return fail(-1, "用户名或密码错误");
         } else {
@@ -36,7 +38,8 @@ public class AccountController extends BaseController{
 
         User newUser = new User();
         newUser.setName(model.getName());
-        newUser.setPassword(new BCryptPasswordEncoder().encode(model.getPassword()));
+        newUser.setPassword(model.getPassword());
+        userService.save(newUser);
 
         return success();
     }

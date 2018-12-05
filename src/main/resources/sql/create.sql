@@ -2,7 +2,7 @@
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `name` varchar(30) NOT NULL COMMENT '姓名',
-  `password` varchar(50) NOT NULL,
+  `password` varchar(256) NOT NULL,
   `age` int(11) DEFAULT NULL COMMENT '年龄',
   `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
   `phone` varchar(15) DEFAULT NULL,
