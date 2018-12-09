@@ -53,6 +53,12 @@
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 
+		<!--使用基于redis存储的session-->
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-data-redis</artifactId>
+		</dependency>
+
 		<!--一个工具，可以使用注解@Data 编译时自动生成get,set方法-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>

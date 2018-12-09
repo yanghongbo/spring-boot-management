@@ -30,4 +30,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     public User findByNameAndPassword(String name, String password) {
         return baseMapper.selectUserByNameAndPassword(name, password);
     }
+
+    public User findByName(String name) {
+        return baseMapper.selectUserByName(name);
+    }
 }

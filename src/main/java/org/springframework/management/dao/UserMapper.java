@@ -22,4 +22,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("SELECT * FROM user WHERE name=#{name} AND password=#{password} limit 1")
     User selectUserByNameAndPassword(@Param("name") String name, @Param("password") String password);
+
+    @Select("SELECT * FROM user WHERE name=#{name} limit 1")
+    User selectUserByName(@Param("name") String name);
 }
