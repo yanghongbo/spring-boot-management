@@ -4,6 +4,7 @@ package org.springframework.management.security;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.management.service.RoleService;
 import org.springframework.management.service.UserService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -22,6 +23,8 @@ public class MyUserDetailsService implements UserDetailsService {
 	Logger log = LoggerFactory.getLogger(MyUserDetailsService.class);
 	@Autowired
 	UserService userService;
+	@Autowired
+    RoleService roleService;
 
 	@Autowired
 	HttpServletRequest request;
@@ -40,6 +43,9 @@ public class MyUserDetailsService implements UserDetailsService {
 		String password = user.getPassword();
 
 		Collection<SimpleGrantedAuthority> collection = new HashSet<SimpleGrantedAuthority>();
+		collection.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+
+
 
 
 		
@@ -50,8 +56,8 @@ public class MyUserDetailsService implements UserDetailsService {
 //            collection.add(new SimpleGrantedAuthority(iterator.next()));
 //        }
 		
-		/*return new User(username, password, AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN"));*/
-		return new User(name, password, null);
+//		/*return new User(username, password, AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN"));*/
+		return new User(name, password, collection);
 	}
 
 }
