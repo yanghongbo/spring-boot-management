@@ -8,6 +8,7 @@ import org.springframework.management.requestmodel.LoginModel;
 import org.springframework.management.requestmodel.RegisterModel;
 import org.springframework.management.service.UserService;
 import org.springframework.management.viewmodel.Message;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sun.security.provider.MD5;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 @RestController
 public class AccountController extends BaseController{
@@ -56,11 +58,14 @@ public class AccountController extends BaseController{
 
     @RequestMapping(value = "/me/userinfo", method = RequestMethod.GET)
     public Message getMeInfo(HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("userInfo");
-        if (user == null) {
+//        User user = (User) request.getSession().getAttribute("userInfo");
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal == null) {
             return success(0, "用户未登录");
         } else {
-            return success(0, String.format("用户已登录，name:%s", user.getName()));
+            return success(0, principal);
         }
     }
 }
